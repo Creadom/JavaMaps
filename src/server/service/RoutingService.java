@@ -11,6 +11,11 @@ public class RoutingService {
     }
 
     public RouteResult findRoute(RoutingGraph graph, String from, String to) {
-        return strategy.findPath(graph, from, to);
+        // Same lock as TrafficService: Dijkstra writes shared arrays (lambda,
+        // predecesseur) inside Graphe, so concurrent ROUTE requests would
+        // corrupt each other even without any traffic update in flight.
+        synchronized (graph) {
+            return strategy.findPath(graph, from, to);
+        }
     }
 }
