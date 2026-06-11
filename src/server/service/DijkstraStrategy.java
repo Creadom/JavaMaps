@@ -23,9 +23,9 @@ public class DijkstraStrategy implements PathFindingStrategy{
         int current = dest;
         while (current != -1) {
             path.add(0, graph.getCityByIndex(current)); // prepend
-            current = g.predecesseur[current];
+            current = g.getPredecesseur()[current];
         }
 
-        return new RouteResult(path, g.lambda[dest]);
+        return new RouteResult(path, g.getLambda()[dest]);
     }
 }
