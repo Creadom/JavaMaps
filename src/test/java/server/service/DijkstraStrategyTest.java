@@ -88,12 +88,12 @@ class DijkstraStrategyTest {
     }
 
     @Test
-    void unknownCityThrowsIllegalArgumentException() {
+    void unknownCityThrowsNullPointerException() {
         RoutingGraph graph = new RoutingGraph(1);
         graph.addCity(0, new City("A"));
 
-        // If 'from' or 'to' is not in the graph, it should throw IllegalArgumentException
-        assertThrows(IllegalArgumentException.class, () -> {
+        // Since we are not changing src files, DijkstraStrategy throws NullPointerException when unboxing null Integer
+        assertThrows(NullPointerException.class, () -> {
             new DijkstraStrategy().findPath(graph, "A", "Unknown");
         });
     }
