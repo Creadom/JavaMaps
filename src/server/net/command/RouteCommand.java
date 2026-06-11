@@ -26,10 +26,12 @@ public class RouteCommand implements ServerCommand {
 
         RouteResult result = ctx.getRoutingService().findRoute(ctx.getGraph(), from, to);
 
+        if (!result.isFound()) {
+            return Protocol.ERR + Protocol.SEPARATOR + "No route between " + from + " and " + to;
+        }
+
         StringBuilder reply = new StringBuilder();
-        reply.append(Protocol.OK)
-             .append(Protocol.SEPARATOR).append(Protocol.CMD_ROUTE)
-             .append(Protocol.SEPARATOR).append(result.getTotalTimeMinutes());
+        reply.append(Protocol.OK).append(Protocol.SEPARATOR).append(Protocol.CMD_ROUTE).append(Protocol.SEPARATOR).append(result.getTotalTimeMinutes());
         for (City city : result.getPath()) {
             reply.append(Protocol.SEPARATOR).append(city.getName());
         }
