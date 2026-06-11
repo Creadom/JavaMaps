@@ -7,8 +7,6 @@ public class Graphe {
 
 	int[] predecesseur;
 
-	final int MAX = 10000;
-
 	public Graphe() {
 
 	}
@@ -104,7 +102,7 @@ public class Graphe {
 		predecesseur = new int[n];
 
 		for (int i = 0; i < n; i++) {
-			lambda[i] = MAX;
+			lambda[i] = Integer.MAX_VALUE;
 			predecesseur[i] = -1;
 		}
 
@@ -113,14 +111,17 @@ public class Graphe {
 
 		for (int k = 1; k < n; k++) {
 			int sommet = sommetMin(definitif);
+			if (sommet == -1) {
+				break; // every remaining vertex is unreachable, nothing left to relax
+			}
 			definitif[sommet] = true;
 
 			Noeud actuel = liste[sommet].getPremier();
 			while (actuel != null) {
 				int voisin = actuel.getInfo().getValeur();
 				int temps  = actuel.getInfo().getDist();
-				if (lambda[sommet] + temps < lambda[voisin]) {
-					lambda[voisin]      = lambda[sommet] + temps;
+				if ((long) lambda[sommet] + temps < lambda[voisin]) {
+					lambda[voisin] = lambda[sommet] + temps;
 					predecesseur[voisin] = sommet;
 				}
 				actuel = actuel.getSuivant();
@@ -129,7 +130,7 @@ public class Graphe {
 	}
 	private int sommetMin(boolean[] definitif) {
 		int sommet = -1;
-		int min = MAX;
+		int min = Integer.MAX_VALUE;
 
 		for (int i = 0; i < liste.length; i++) {
 			if (!definitif[i] && lambda[i] < min) {
