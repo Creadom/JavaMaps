@@ -1,30 +1,36 @@
 package server.net;
 
+import server.net.command.CommandFactory;
+import server.net.command.ServerCommand;
+
 import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 public class ClientHandler implements Runnable {
 
     private final Socket socket;
+    private final RequestContext context;
 
-    public ClientHandler(Socket socket) {
+    public ClientHandler(Socket socket, RequestContext context) {
         this.socket = socket;
+        this.context = context;
     }
 
     @Override
     public void run() {
         System.out.println("Client connected: " + socket.getInetAddress());
         try (socket;
-             BufferedReader in  = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-             PrintWriter    out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true)) {
+             BufferedReader in  = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+             PrintWriter    out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true)) {
 
             String line;
             while ((line = in.readLine()) != null) {
-                if (line.equals(common.Protocol.CMD_BYE)) {
-                    out.println("OK|BYE");
+                ServerCommand command = CommandFactory.fromLine(line);
+                out.println(command.execute(context));
+                if (command.terminatesSession()) {
                     break;
                 }
-                out.println(line); // echo for now
             }
 
         } catch (IOException e) {
