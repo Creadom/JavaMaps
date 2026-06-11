@@ -17,7 +17,7 @@ public class ServerApp {
     private static final int PORT = 8888;
 
     public static void main(String[] args) {
-        MapRepository repo = new CSVMapRepository("src/server/resources/valais.csv");
+        MapRepository repo = new CSVMapRepository("valais.csv");
         RoutingGraph graph = repo.load();
 
         RoutingService routingService = new RoutingService(new DijkstraStrategy());

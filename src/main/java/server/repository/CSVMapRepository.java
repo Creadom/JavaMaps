@@ -1,11 +1,13 @@
 package server.repository;
+
 import server.domain.model.City;
 import server.domain.model.RoutingGraph;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class CSVMapRepository implements MapRepository {
+public class CSVMapRepository implements server.repository.MapRepository {
 
     private final String filePath;
 
@@ -46,7 +48,11 @@ public class CSVMapRepository implements MapRepository {
 
     private List<String[]> readRows() {
         List<String[]> rows = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        InputStream stream = getClass().getResourceAsStream("/" + filePath);
+        if (stream == null) {
+            throw new RuntimeException("Map resource not found on classpath: " + filePath);
+        }
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
