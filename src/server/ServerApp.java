@@ -1,26 +1,21 @@
 package server;
 
 import server.domain.model.*;
+import server.repository.CSVMapRepository;
+import server.repository.MapRepository;
+import server.service.DijkstraStrategy;
+import server.service.RoutingService;
 
 public class ServerApp {
     static void main(String[] args) {
-        System.out.println("Hello World!");
 
-        City sion     = new City("Sion");
-        City sierre   = new City("Sierre");
-        City stLeo    = new City("St-Léonard");
+        MapRepository repo = new CSVMapRepository("src/server/resources/valais.csv");
+        RoutingGraph graph = repo.load();
 
-        RoutingGraph graph = new RoutingGraph(3);
-        graph.addCity(0, sion);
-        graph.addCity(1, stLeo);
-        graph.addCity(2, sierre);
+        RoutingService service = new RoutingService(new DijkstraStrategy());
+        RouteResult result = service.findRoute(graph, "Martigny", "Brig");
 
-        graph.addRoad(sion, stLeo, 8);
-        graph.addRoad(stLeo, sierre, 7);
-        graph.addRoad(sion, sierre, 20);
-
-        for (Road r : graph.getRoadsFrom("Sion")) {
-            System.out.println("→ " + r.getDestination().getName() + " " + r.getTravelTimeMinutes() + " min");
-        }
+        System.out.println("Time: " + result.getTotalTimeMinutes() + " min");
+        result.getPath().forEach(c -> System.out.print(c.getName() + " → "));
     }
 }
