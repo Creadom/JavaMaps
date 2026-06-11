@@ -10,6 +10,20 @@ public class RouteResult {
         this.path = path;
         this.totalTimeMinutes = totalTimeMinutes;
     }
-    public List<City> getPath()        { return path; }
-    public int getTotalTimeMinutes()   { return totalTimeMinutes; }
+
+    public static RouteResult noRoute() {
+        return new RouteResult(List.of(), -1);
+    }
+
+    public boolean isFound() {
+        return !path.isEmpty();
+    }
+
+    public List<City> getPath() {
+        return path;
+    }
+
+    public int getTotalTimeMinutes() {
+        return totalTimeMinutes;
+    }
 }
