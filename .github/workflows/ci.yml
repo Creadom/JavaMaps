@@ -1,12 +1,12 @@
 name: CI
 
 # Validate that the project builds and tests pass.
-# Runs on every push to dev and on every pull request targeting main.
+# Runs on every push to dev and on every pull request targeting main or dev.
 on:
   push:
     branches: [dev]
   pull_request:
-    branches: [main]
+    branches: [main, dev]
 
 jobs:
   build:
