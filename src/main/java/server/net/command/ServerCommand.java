@@ -10,7 +10,9 @@ public interface ServerCommand {
 
     String execute(RequestContext ctx);
 
-    /** True when this command should close the client connection after replying. */
+    /**
+     * True when this command should close the client connection after replying.
+     */
     default boolean terminatesSession() {
         return false;
     }

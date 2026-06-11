@@ -35,7 +35,7 @@ public class ClientApp {
                 case "1" -> findRoute(connection, keyboard);
                 case "2" -> reportTraffic(connection, keyboard);
                 case "3" -> running = false;
-                default  -> System.out.println("Please pick 1, 2 or 3.");
+                default -> System.out.println("Please pick 1, 2 or 3.");
             }
         }
 

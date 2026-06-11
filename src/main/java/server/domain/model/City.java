@@ -1,13 +1,4 @@
 package server.domain.model;
 
-public class City {
-    private final String name;
-
-    public City(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
+public record City(String name) {
 }

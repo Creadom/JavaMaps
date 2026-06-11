@@ -3,7 +3,10 @@ package server.repository;
 import server.domain.model.City;
 import server.domain.model.RoutingGraph;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -38,8 +41,8 @@ public class CSVMapRepository implements server.repository.MapRepository {
         // Second pass: add roads
         for (String[] row : rows) {
             City from = cityMap.get(row[0]);
-            City to   = cityMap.get(row[1]);
-            int time  = Integer.parseInt(row[2].trim());
+            City to = cityMap.get(row[1]);
+            int time = Integer.parseInt(row[2].trim());
             graph.addRoad(from, to, time);
         }
 

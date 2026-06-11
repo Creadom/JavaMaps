@@ -2,11 +2,7 @@ package client.net;
 
 import common.Protocol;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
@@ -29,11 +25,13 @@ public class ServerConnection {
 
     public void connect() throws IOException {
         socket = new Socket(host, port);
-        in  = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
         out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
     }
 
-    /** Sends one request line and blocks until the server's one-line reply arrives. */
+    /**
+     * Sends one request line and blocks until the server's one-line reply arrives.
+     */
     public String send(String request) throws IOException {
         out.println(request);
         String reply = in.readLine();
@@ -43,7 +41,9 @@ public class ServerConnection {
         return reply;
     }
 
-    /** Says BYE to the server, then closes the socket (and with it both streams). */
+    /**
+     * Says BYE to the server, then closes the socket (and with it both streams).
+     */
     public void close() {
         try {
             if (out != null) {

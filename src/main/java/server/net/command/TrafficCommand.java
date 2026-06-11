@@ -21,7 +21,7 @@ public class TrafficCommand implements ServerCommand {
             return Protocol.ERR + Protocol.SEPARATOR
                     + "Observed time must be between 1 and 600 minutes";
         }
-        boolean applied = ctx.getTrafficService().reportTraffic(from, to, observedMinutes);
+        boolean applied = ctx.trafficService().reportTraffic(from, to, observedMinutes);
         if (!applied) {
             return Protocol.ERR + Protocol.SEPARATOR
                     + "No direct road between " + from + " and " + to;

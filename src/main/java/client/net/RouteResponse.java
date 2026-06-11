@@ -3,6 +3,7 @@ package client.net;
 import common.Protocol;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -30,14 +31,23 @@ public class RouteResponse {
         // expected: OK|ROUTE|<eta>|<city1>|...|<cityN>
         int eta = Integer.parseInt(parts[2]);
         List<String> cities = new ArrayList<>();
-        for (int i = 3; i < parts.length; i++) {
-            cities.add(parts[i]);
-        }
+        cities.addAll(Arrays.asList(parts).subList(3, parts.length));
         return new RouteResponse(true, null, eta, cities);
     }
 
-    public boolean isSuccess()        { return success; }
-    public String getErrorMessage()   { return errorMessage; }
-    public int getEtaMinutes()        { return etaMinutes; }
-    public List<String> getCities()   { return cities; }
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public int getEtaMinutes() {
+        return etaMinutes;
+    }
+
+    public List<String> getCities() {
+        return cities;
+    }
 }

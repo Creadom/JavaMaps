@@ -2,57 +2,48 @@ package server.domain.model;
 
 public class Info {
 
-  private int valeur ;
-  private int dist;
-  private final int baseDist; // travel time with empty roads, from the map data; traffic can never go below it
+    private final int baseDist; // travel time with empty roads, from the map data; traffic can never go below it
+    private int valeur;
+    private int dist;
 
 
+    public Info(int valeur) {
+        this.valeur = valeur;
+        this.baseDist = 0;
+    }
 
-  public Info(int valeur)
-  {
-    this.valeur = valeur ;
-    this.baseDist = 0 ;
-  }
-
-  public Info(int valeur, int dist)
- 	{
- 		this.valeur = valeur ;
- 		this.dist = dist ;
- 		this.baseDist = dist ;
- 	}
+    public Info(int valeur, int dist) {
+        this.valeur = valeur;
+        this.dist = dist;
+        this.baseDist = dist;
+    }
 
 
-  //getteur
+    //getteur
 
-  public int getValeur()
-  {
-    return valeur ;
-  }
+    public int getValeur() {
+        return valeur;
+    }
 
-  public int getDist()
-  {
-    return dist ;
-  }
+    public void setValeur(int valeur) {
+        this.valeur = valeur;
+    }
 
-  public int getBaseDist()
-  {
-    return baseDist ;
-  }
+    public int getDist() {
+        return dist;
+    }
 
-  //setteur
+    //setteur
 
-  public void setValeur(int valeur)
-  {
-    this.valeur = valeur ;
-  }
+    public void setDist(int dist) {
+        this.dist = dist;
+    }
 
-  public void setDist(int dist)
-  {
-    this.dist = dist ;
-  }
+    public int getBaseDist() {
+        return baseDist;
+    }
 
-  public String toString()
-  {
-     return (valeur + " ") ;
-  }
+    public String toString() {
+        return (valeur + " ");
+    }
 }

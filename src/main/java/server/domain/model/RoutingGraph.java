@@ -1,9 +1,9 @@
 package server.domain.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 public class RoutingGraph {
     private final Graphe graphe;
@@ -18,12 +18,12 @@ public class RoutingGraph {
 
     public void addCity(int index, City city) {
         cities[index] = city;
-        indexes.put(city.getName(), index);
+        indexes.put(city.name(), index);
     }
 
     public void addRoad(City from, City to, int travelTimeMinutes) {
-        int fromIdx = indexes.get(from.getName());
-        int toIdx   = indexes.get(to.getName());
+        int fromIdx = indexes.get(from.name());
+        int toIdx = indexes.get(to.name());
         // Info(valeur=destinationIndex, dist=travelTime)
         graphe.liste[fromIdx].enfile(new Noeud(new Info(toIdx, travelTimeMinutes)));
         graphe.liste[toIdx].enfile(new Noeud(new Info(fromIdx, travelTimeMinutes))); // bidirectional
@@ -35,7 +35,7 @@ public class RoutingGraph {
         Noeud current = graphe.liste[idx].getPremier();
         while (current != null) {
             City dest = cities[current.getInfo().getValeur()];
-            int time  = current.getInfo().getDist();
+            int time = current.getInfo().getDist();
             roads.add(new Road(dest, time));
             current = current.getSuivant();
         }
@@ -49,12 +49,12 @@ public class RoutingGraph {
      */
     public boolean setTravelTime(String fromCity, String toCity, int observedMinutes) {
         Integer fromIdx = indexes.get(fromCity);
-        Integer toIdx   = indexes.get(toCity);
+        Integer toIdx = indexes.get(toCity);
         if (fromIdx == null || toIdx == null) {
             return false;
         }
         return setDirectedTime(fromIdx, toIdx, observedMinutes)
-            && setDirectedTime(toIdx, fromIdx, observedMinutes);
+                && setDirectedTime(toIdx, fromIdx, observedMinutes);
     }
 
     private boolean setDirectedTime(int fromIdx, int toIdx, int observedMinutes) {
@@ -70,8 +70,7 @@ public class RoutingGraph {
         return false; // no direct road in this direction
     }
 
-    public Graphe getGraphe()
-    {
+    public Graphe getGraphe() {
         return graphe;
     }
 

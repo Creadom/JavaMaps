@@ -17,23 +17,23 @@ public class RouteCommand implements ServerCommand {
 
     @Override
     public String execute(RequestContext ctx) {
-        if (!ctx.getGraph().hasCity(from)) {
+        if (!ctx.graph().hasCity(from)) {
             return Protocol.ERR + Protocol.SEPARATOR + "Unknown city '" + from + "'";
         }
-        if (!ctx.getGraph().hasCity(to)) {
+        if (!ctx.graph().hasCity(to)) {
             return Protocol.ERR + Protocol.SEPARATOR + "Unknown city '" + to + "'";
         }
 
-        RouteResult result = ctx.getRoutingService().findRoute(ctx.getGraph(), from, to);
+        RouteResult result = ctx.routingService().findRoute(ctx.graph(), from, to);
 
         if (!result.isFound()) {
             return Protocol.ERR + Protocol.SEPARATOR + "No route between " + from + " and " + to;
         }
 
         StringBuilder reply = new StringBuilder();
-        reply.append(Protocol.OK).append(Protocol.SEPARATOR).append(Protocol.CMD_ROUTE).append(Protocol.SEPARATOR).append(result.getTotalTimeMinutes());
-        for (City city : result.getPath()) {
-            reply.append(Protocol.SEPARATOR).append(city.getName());
+        reply.append(Protocol.OK).append(Protocol.SEPARATOR).append(Protocol.CMD_ROUTE).append(Protocol.SEPARATOR).append(result.totalTimeMinutes());
+        for (City city : result.path()) {
+            reply.append(Protocol.SEPARATOR).append(city.name());
         }
         return reply.toString();
     }

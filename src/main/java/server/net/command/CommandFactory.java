@@ -11,7 +11,8 @@ import java.util.regex.Pattern;
  */
 public class CommandFactory {
 
-    private CommandFactory() { } // static utility, no instances
+    private CommandFactory() {
+    } // static utility, no instances
 
     public static ServerCommand fromLine(String line) {
         if (line == null || line.isBlank()) {
