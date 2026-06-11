@@ -5,6 +5,8 @@ public class Graphe {
 
 	int[] lambda;
 
+	int[] predecesseur;
+
 	final int MAX = 10000;
 
 	public Graphe() {
@@ -86,47 +88,36 @@ public class Graphe {
 
 // Algorithme de Dijkstra 
 //-----------------------------------------------------------------------------
-// pr�conditions : valeurs >= 0 et tous les sommets atteignables
 
-	public void dijkstra() // ICI DE 0
-	{
-		int n = liste.length; // n = nombre de sommets
+	public void dijkstra(int source) {
+		int n = liste.length;
 
 		lambda = new int[n];
-		
+		predecesseur = new int[n];
 
-		for (int i = 0; i < n; i++) // initialisation
+		for (int i = 0; i < n; i++) {
 			lambda[i] = MAX;
+			predecesseur[i] = -1;
+		}
 
-	
-		boolean definitif[] = new boolean[n];
+		boolean[] definitif = new boolean[n];
+		lambda[source] = 0;
 
-	
-		lambda[0] = 0;
-
-		for (int k = 1; k < n; k++) // n étapes : PRECONDITIONS TOUS LES SOMMETS ATTEIGNABLES
-		{
-			// affichage
-			afficheLambda();
-			// recherche du sommet minimum -> (pas optimal -> TAS)
+		for (int k = 1; k < n; k++) {
 			int sommet = sommetMin(definitif);
 			definitif[sommet] = true;
 
-
-			// ajustement des valeurs
 			Noeud actuel = liste[sommet].getPremier();
 			while (actuel != null) {
-				if(lambda[sommet] + actuel.getInfo().getDist() < lambda[actuel.getInfo().getValeur()])
-				{
-					lambda[actuel.getInfo().getValeur()] = lambda[sommet] + actuel.getInfo().getDist();
+				int voisin = actuel.getInfo().getValeur();
+				int temps  = actuel.getInfo().getDist();
+				if (lambda[sommet] + temps < lambda[voisin]) {
+					lambda[voisin]      = lambda[sommet] + temps;
+					predecesseur[voisin] = sommet;
 				}
-
 				actuel = actuel.getSuivant();
 			}
-			
-			
 		}
-
 	}
 	private int sommetMin(boolean[] definitif) {
 		int sommet = -1;
