@@ -89,6 +89,14 @@ public class Graphe {
 // Algorithme de Dijkstra 
 //-----------------------------------------------------------------------------
 
+	public int[] getLambda() {
+		return lambda;
+	}
+
+	public int[] getPredecesseur() {
+		return predecesseur;
+	}
+
 	public void dijkstra(int source) {
 		int n = liste.length;
 
