@@ -17,11 +17,16 @@ public class TrafficCommand implements ServerCommand {
 
     @Override
     public String execute(RequestContext ctx) {
+        if (observedMinutes < 1 || observedMinutes > 600) {
+            return Protocol.ERR + Protocol.SEPARATOR
+                    + "Observed time must be between 1 and 600 minutes";
+        }
         boolean applied = ctx.getTrafficService().reportTraffic(from, to, observedMinutes);
         if (!applied) {
             return Protocol.ERR + Protocol.SEPARATOR
                     + "No direct road between " + from + " and " + to;
         }
+
         return Protocol.OK + Protocol.SEPARATOR + Protocol.CMD_TRAFFIC;
     }
 }
