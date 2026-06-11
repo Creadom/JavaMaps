@@ -1,4 +1,4 @@
-package node;
+package server.domain.node;
 
 public class Info {
 
