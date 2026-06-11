@@ -39,7 +39,7 @@ public class File {
         this.dernier = dernier;
     }
 
-    // m�thodes
+    // méthodes
 
     public boolean estVide() {
         return (longueur == 0);
@@ -102,16 +102,16 @@ public class File {
 
     }
 
-
+    @Override
     public String toString() {
-        String chaine = "";
+        StringBuilder sb = new StringBuilder();
         Noeud courant = premier;
 
         while (courant != null) {
-            chaine += courant.getInfo().toString() + " ";
+            sb.append(courant.getInfo().toString()).append(" ");
             courant = courant.getSuivant();
         }
-        return chaine;
+        return sb.toString();
     }
 
 

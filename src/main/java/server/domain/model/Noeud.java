@@ -31,7 +31,7 @@ public class Noeud {
         return info;
     }
 
-    //utile lors d'�changes de noeuds, donc d'infos
+    // utile lors d'échanges de noeuds, donc d'infos
     public void setInfo(Info nouveau) {
         info = nouveau;
     }
