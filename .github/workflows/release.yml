@@ -1,0 +1,40 @@
+name: Release
+
+# When code lands on main (e.g. a merge from dev), build the two runnable
+# jars and publish them as a GitHub Release.
+on:
+  push:
+    branches: [main]
+
+# The default GITHUB_TOKEN needs write access to create a release + tag.
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v5
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      # package runs the tests first, so a failing test blocks the release.
+      - name: Build the jars
+        run: mvn -B clean package
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="v1.0.${{ github.run_number }}"
+          gh release create "$TAG" \
+            target/javamaps-server.jar \
+            target/javamaps-client.jar \
+            --title "JavaMaps $TAG" \
+            --notes "Automated release built from main (commit ${{ github.sha }})."
