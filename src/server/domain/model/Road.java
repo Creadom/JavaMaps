@@ -1,4 +1,4 @@
-package server.domain.node;
+package server.domain.model;
 
 public class Road {
     private final City destination;
@@ -16,5 +16,9 @@ public class Road {
 
     public void setTravelTimeMinutes(int travelTimeMinutes) {
         this.travelTimeMinutes = travelTimeMinutes;
+    }
+
+    public City getDestination() {
+        return destination;
     }
 }

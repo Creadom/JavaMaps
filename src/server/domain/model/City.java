@@ -1,7 +1,7 @@
-package server.domain.node;
+package server.domain.model;
 
 public class City {
-    public final String name;
+    private final String name;
 
     public City(String name) {
         this.name = name;

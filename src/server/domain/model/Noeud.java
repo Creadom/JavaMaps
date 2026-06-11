@@ -1,4 +1,4 @@
-package server.domain.node;
+package server.domain.model;
 public class Noeud
     {
     private Info info ;
