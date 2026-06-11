@@ -72,7 +72,7 @@ public class ClientApp {
         System.out.print("To: ");
         String to = keyboard.nextLine().trim();
 
-        System.out.print("Minute difference observed: ");
+        System.out.print("How many minutes did this segment take you? ");
         int minutes;
         try {
             minutes = Integer.parseInt(keyboard.nextLine().trim());
