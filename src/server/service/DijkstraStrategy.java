@@ -18,6 +18,9 @@ public class DijkstraStrategy implements PathFindingStrategy{
 
         g.dijkstra(source); // sets g.lambda and g.predecesseur
 
+        if (g.getLambda()[dest] == Integer.MAX_VALUE) {
+            return RouteResult.noRoute();
+        }
         // reconstruct path by walking predecesseur[] backwards
         List<City> path = new ArrayList<>();
         int current = dest;

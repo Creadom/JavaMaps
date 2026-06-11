@@ -23,6 +23,7 @@ public class RouteResult {
         return path;
     }
 
+
     public int getTotalTimeMinutes() {
         return totalTimeMinutes;
     }
