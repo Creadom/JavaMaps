@@ -1,0 +1,10 @@
+# Maven build output
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# OS noise
+.DS_Store
+Thumbs.db
