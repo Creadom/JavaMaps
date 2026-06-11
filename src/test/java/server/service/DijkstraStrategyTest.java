@@ -10,6 +10,7 @@ import java.util.List;
 // JUnit's assertion helpers: assertEquals, assertTrue, assertFalse...
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DijkstraStrategyTest {
@@ -92,16 +93,9 @@ class DijkstraStrategyTest {
         graph.addCity(0, new City("A"));
 
         // If 'from' or 'to' is not in the graph, it should throw IllegalArgumentException
-        try {
+        assertThrows(IllegalArgumentException.class, () -> {
             new DijkstraStrategy().findPath(graph, "A", "Unknown");
-            org.junit.jupiter.api.Assertions.fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            // expected
-        } catch (NullPointerException e) {
-            // Because getIndex unboxes null Integer, we might get NPE if not handled.
-            // But we should fix DijkstraStrategy to throw IllegalArgumentException.
-            org.junit.jupiter.api.Assertions.fail("Expected IllegalArgumentException but got NPE. You should fix DijkstraStrategy.");
-        }
+        });
     }
 
     @Test
