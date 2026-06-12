@@ -19,6 +19,12 @@ class CommandFactoryTest {
     }
 
     @Test
+    void parseValidCitiesCommand() {
+        ServerCommand cmd = CommandFactory.fromLine(Protocol.CMD_CITIES);
+        assertTrue(cmd instanceof CitiesCommand);
+    }
+
+    @Test
     void parseValidByeCommand() {
         ServerCommand cmd = CommandFactory.fromLine(Protocol.CMD_BYE);
         assertTrue(cmd instanceof ByeCommand);
