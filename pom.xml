@@ -15,6 +15,12 @@
     </properties>
 
     <dependencies>
+        <!-- Terminal handling for the client's arrow-key city picker -->
+        <dependency>
+            <groupId>org.jline</groupId>
+            <artifactId>jline</artifactId>
+            <version>3.26.3</version>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -45,17 +51,36 @@
                             </archive>
                         </configuration>
                     </execution>
+                </executions>
+            </plugin>
+            <!-- The client needs JLine bundled in, so its jar is shaded (fat).
+                 The server has no dependencies and stays a plain jar above. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.2</version>
+                <executions>
                     <execution>
                         <id>client-jar</id>
                         <phase>package</phase>
-                        <goals><goal>jar</goal></goals>
+                        <goals><goal>shade</goal></goals>
                         <configuration>
-                            <classifier>client</classifier>
-                            <archive>
-                                <manifest>
+                            <outputFile>${project.build.directory}/javamaps-client.jar</outputFile>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>client.ClientApp</mainClass>
-                                </manifest>
-                            </archive>
+                                </transformer>
+                            </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>
