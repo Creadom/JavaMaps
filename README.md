@@ -50,6 +50,30 @@ Use the arrow keys to select cities. Press **Enter** to confirm. In environments
 - **Find a route** — select departure and destination; the server returns the fastest path and ETA in minutes.
 - **Report traffic** — select the road segment you just drove and enter how many minutes it took. The server updates the live weight for all future route requests.
 
+## Architecture
+
+```mermaid
+flowchart LR
+    subgraph Client["Client — javamaps-client.jar"]
+        Picker["CityPicker<br>(terminal UI)"] --> App["ClientApp"]
+        App --> Conn["ServerConnection"]
+    end
+
+    subgraph Server["Server — javamaps-server.jar"]
+        Handler["ClientHandler<br>(one thread per client)"] --> Factory["CommandFactory"]
+        Factory --> Cmds["ROUTE · TRAFFIC · CITIES · BYE"]
+        Cmds --> Routing["RoutingService<br>(Dijkstra)"]
+        Cmds --> Traffic["TrafficService"]
+        Routing --> Graph["RoutingGraph<br>(shared, synchronized)"]
+        Traffic --> Graph
+        Repo["CSVMapRepository"] -->|"loads valais.csv"| Graph
+    end
+
+    Conn <-->|"TCP :8888<br>line-based protocol"| Handler
+```
+
+The server accepts any number of clients, each handled on its own thread. All threads share one `RoutingGraph`; route computation and traffic updates synchronize on it.
+
 ## Protocol
 
 Communication uses a line-based text protocol over TCP (pipe-separated fields). See [PROTOCOL.md](PROTOCOL.md) for the full specification.
