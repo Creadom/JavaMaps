@@ -11,6 +11,7 @@
 ## Server -> Client
 
 1. OK|ROUTE|ETA_IN_MINUTES|CITY_1|CITY_2|...CITY_N -- route with eta and cities route
-2. OK|TRAFFIC -- aknowledge received traffic informations
+2. OK|TRAFFIC -- acknowledge received traffic informations
 3. OK|CITIES|CITY_1|CITY_2|...CITY_N -- all known city names in stable order
-4. ERR|MESSAGE
+4. OK|BYE -- acknowledge disconnect, then the server closes the session
+5. ERR|MESSAGE
