@@ -12,6 +12,12 @@ public class DijkstraStrategy implements PathFindingStrategy {
 
     @Override
     public RouteResult findPath(RoutingGraph graph, String from, String to) {
+        // Honor the PathFindingStrategy contract: unknown cities yield "no route",
+        // never an NPE from unboxing a missing index.
+        if (!graph.hasCity(from) || !graph.hasCity(to)) {
+            return RouteResult.noRoute();
+        }
+
         Graphe g = graph.getGraphe();
         int source = graph.getIndex(from);
         int dest = graph.getIndex(to);
