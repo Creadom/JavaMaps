@@ -22,7 +22,7 @@ public class ServerApp {
 
         RoutingService routingService = new RoutingService(new DijkstraStrategy());
         TrafficService trafficService = new TrafficService(graph);
-        // Shared across all client threads (thread-safety addressed later)
+        // Shared across all client threads; both services synchronize on the graph
         RequestContext context = new RequestContext(graph, routingService, trafficService);
 
         System.out.println("Server started on port " + PORT);
