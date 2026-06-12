@@ -40,6 +40,9 @@ public class CommandFactory {
                     return new UnknownCommand("TRAFFIC minutes must be a number");
                 }
 
+            case Protocol.CMD_CITIES:
+                return new CitiesCommand();
+
             case Protocol.CMD_BYE:
                 return new ByeCommand();
 

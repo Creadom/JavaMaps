@@ -70,6 +70,17 @@ public class RoutingGraph {
         return false; // no direct road in this direction
     }
 
+    /** All known city names, in index order. */
+    public List<String> getCityNames() {
+        List<String> names = new ArrayList<>(cities.length);
+        for (City city : cities) {
+            if (city != null) {
+                names.add(city.name());
+            }
+        }
+        return names;
+    }
+
     public Graphe getGraphe() {
         return graphe;
     }
