@@ -10,7 +10,6 @@ import java.util.List;
 // JUnit's assertion helpers: assertEquals, assertTrue, assertFalse...
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DijkstraStrategyTest {
@@ -88,14 +87,13 @@ class DijkstraStrategyTest {
     }
 
     @Test
-    void unknownCityThrowsNullPointerException() {
+    void returnsNoRouteForUnknownCity() {
         RoutingGraph graph = new RoutingGraph(1);
         graph.addCity(0, new City("A"));
 
-        // Since we are not changing src files, DijkstraStrategy throws NullPointerException when unboxing null Integer
-        assertThrows(NullPointerException.class, () -> {
-            new DijkstraStrategy().findPath(graph, "A", "Unknown");
-        });
+        RouteResult result = new DijkstraStrategy().findPath(graph, "A", "Unknown");
+
+        assertFalse(result.isFound());
     }
 
     @Test
